@@ -1,3 +1,4 @@
+using FeatureAuth;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -53,5 +54,10 @@ app.MapGet("/logout", () => Results.SignOut(new AuthenticationProperties
 {
     RedirectUri = "/"
 }));
+
+app.MapGet("/featureAuth", (IFeatureAuthRepository endpointRepository) =>
+{
+    return endpointRepository.GetDetails();
+});
 
 app.Run();
