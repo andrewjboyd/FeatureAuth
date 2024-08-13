@@ -1,17 +1,17 @@
+using FastEndpoints;
 using FeatureAuth;
+using FeatureAuth.UI;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using ToDoModule;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddAuthentication(options =>
-    {
-        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        options.RequireAuthenticatedSignIn = false;
-    })
+builder.Services.AddFastEndpoints();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
         options.Events.OnRedirectToLogin = context =>
@@ -23,11 +23,20 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
+builder.Services.AddAuthorization();
+
+builder.Services.AddFeatureAuthDetails<DemoAuth>();
+
+builder.Services.AddToDoModule();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication()
+   .UseAuthorization();
 
 app.MapGet("/login", ([FromQuery] string? returnUrl) =>
 {
@@ -35,29 +44,46 @@ app.MapGet("/login", ([FromQuery] string? returnUrl) =>
     var claims = new List<Claim>
         {
             new(ClaimTypes.Name, UserGuid),
+            new("folderList", "1"),
+            new("DemoAuth", "1"),
         };
 
-    var identity = new ClaimsIdentity(claims);
+    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
     var principal = new ClaimsPrincipal(identity);
 
-    return Results.SignIn(
-        principal,
-        new AuthenticationProperties
-        {
-            RedirectUri = returnUrl ?? "/",
-        },
-        CookieAuthenticationDefaults.AuthenticationScheme
-    );
+    return Results.SignIn(principal, new AuthenticationProperties
+    {
+        // This should be white listed
+        RedirectUri = !string.IsNullOrEmpty(returnUrl) ? returnUrl : "/",
+    });
 });
 
-app.MapGet("/logout", () => Results.SignOut(new AuthenticationProperties
+app.MapGet("/logout", async (HttpContext context) =>
 {
-    RedirectUri = "/"
-}));
+    await context.SignOutAsync();
+
+    context.Response.Redirect("/");
+});
 
 app.MapGet("/featureAuth", (IFeatureAuthRepository endpointRepository) =>
 {
     return endpointRepository.GetDetails();
 });
+
+app.MapGet("/", (ClaimsPrincipal claimsPrincipal) =>
+{
+    return new
+    {
+        claimsPrincipal.Identity?.IsAuthenticated,
+        claims = claimsPrincipal.Claims.Select(c => new { c.Type, c.Value })
+    };
+});
+
+app.MapGet("/test", [EndpointId<DemoAuth>(DemoAuth.Read)] () =>
+{
+    return "Hello world";
+});
+
+app.UseFastEndpoints();
 
 app.Run();

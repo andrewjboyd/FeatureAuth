@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 namespace FeatureAuth;
 public static class IOCHelpers
 {
-    public static void AddFlexibleAuthDetails<T>(this IServiceCollection services)
+    public static void AddFeatureAuthDetails<T>(this IServiceCollection services)
         where T : struct, Enum
     {
         if (EnumFibonacciValidator.IsValid<T>())

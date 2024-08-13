@@ -7,9 +7,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatureAuth", "FeatureAuth\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatureAuth.UI", "FeatureAuth.UI\FeatureAuth.UI.csproj", "{262895B7-4A23-49A7-BCA6-30F7CC2543C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeatureAuth.UnitTests", "FeatureAuth.UnitTests\FeatureAuth.UnitTests.csproj", "{309E0736-64E3-4A77-B41E-8860A3295C2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatureAuth.UnitTests", "FeatureAuth.UnitTests\FeatureAuth.UnitTests.csproj", "{309E0736-64E3-4A77-B41E-8860A3295C2C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FeatureAuth", "FeatureAuth", "{0972B743-2C61-46AC-8AC9-B4EC420AA4E4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{4530A050-767F-423D-9249-811410756CE8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ToDoItems", "ToDoItems", "{99352B96-C13C-4D36-B4ED-05106D242569}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoModule", "ToDoModule\ToDoModule.csproj", "{5417A78F-0AC5-406B-9168-17083DB492D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +35,10 @@ Global
 		{309E0736-64E3-4A77-B41E-8860A3295C2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{309E0736-64E3-4A77-B41E-8860A3295C2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{309E0736-64E3-4A77-B41E-8860A3295C2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5417A78F-0AC5-406B-9168-17083DB492D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5417A78F-0AC5-406B-9168-17083DB492D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5417A78F-0AC5-406B-9168-17083DB492D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5417A78F-0AC5-406B-9168-17083DB492D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,6 +46,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{13C81C3F-88F3-4F78-8477-FF0703298993} = {0972B743-2C61-46AC-8AC9-B4EC420AA4E4}
 		{309E0736-64E3-4A77-B41E-8860A3295C2C} = {0972B743-2C61-46AC-8AC9-B4EC420AA4E4}
+		{99352B96-C13C-4D36-B4ED-05106D242569} = {4530A050-767F-423D-9249-811410756CE8}
+		{5417A78F-0AC5-406B-9168-17083DB492D7} = {99352B96-C13C-4D36-B4ED-05106D242569}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5D44CD8D-E171-4372-8A02-49D8F70AC77D}

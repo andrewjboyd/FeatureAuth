@@ -12,11 +12,9 @@ internal class EndpointIdAuthorizationHandler<T>(ILogger<EndpointIdAuthorization
 
     protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, EndpointIdAttribute<T> requirement)
     {
-        // Log as a warning so that it's very clear in sample output which authorization
-        // policies(and requirements/handlers) are in use.
         _logger.LogInformation("Evaluating authorization requirement for EndPointId = '{EndPointId}'", requirement.EndPointIdentifier);
 
-        var authClaim = context.User.FindFirst(c => c.Type == _claimType);
+        var authClaim = context.User.FindFirst(c => c.Type.Equals(_claimType, StringComparison.OrdinalIgnoreCase));
         if (authClaim is null)
         {
             return Task.CompletedTask;
@@ -24,7 +22,7 @@ internal class EndpointIdAuthorizationHandler<T>(ILogger<EndpointIdAuthorization
 
         if (!int.TryParse(authClaim.Value, out int endPointPermissions))
         {
-            _logger.LogError("Could not convert '{AuthCliamValue}' to an integer for cliam {authClaimType}", authClaim.Value, authClaim.Type);
+            _logger.LogError("Could not convert '{AuthCliamValue}' to an integer for claim {authClaimType}", authClaim.Value, authClaim.Type);
             return Task.CompletedTask;
         }
 
