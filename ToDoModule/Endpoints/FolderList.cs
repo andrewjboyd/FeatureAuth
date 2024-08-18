@@ -9,7 +9,6 @@ internal class FolderList : EndpointWithoutRequest<FolderListResponse>
         Get("/Folders");
         Policy(b => b.RequireAssertion(ctx =>
         {
-
             var authClaim = ctx.User.FindFirst(c => c.Type.Equals("folderList", StringComparison.OrdinalIgnoreCase));
             if (authClaim is null)
             {
