@@ -1,4 +1,4 @@
-﻿namespace FeatureAuth.UI;
+﻿namespace FeatureAuth.WebApp;
 
 public enum DemoAuth
 {

@@ -1,6 +1,6 @@
 using FastEndpoints;
 using FeatureAuth;
-using FeatureAuth.UI;
+using FeatureAuth.WebApp;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
