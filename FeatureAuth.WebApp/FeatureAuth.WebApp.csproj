@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -9,9 +9,13 @@
   <ItemGroup>
     <PackageReference Include="FastEndpoints" Version="5.27.0" />
     <PackageReference Include="FastEndpoints.Swagger" Version="5.27.0" />
-  </ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.*-*" />
+    <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.*-* " />
+    <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.*-* " />
+   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FeatureAuth.WebApp.Client\FeatureAuth.WebApp.Client.csproj" />
     <ProjectReference Include="..\FeatureAuth\FeatureAuth.csproj" />
     <ProjectReference Include="..\ToDoModule\ToDoModule.csproj" />
   </ItemGroup>

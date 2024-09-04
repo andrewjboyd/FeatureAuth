@@ -1,13 +1,20 @@
 using FastEndpoints;
 using FeatureAuth;
 using FeatureAuth.WebApp;
+using FeatureAuth.WebApp.Client.Pages;
+using FeatureAuth.WebApp.Components;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.FluentUI.AspNetCore.Components;
 using System.Security.Claims;
 using ToDoModule;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddRazorComponents()
+    .AddInteractiveWebAssemblyComponents();
+builder.Services.AddFluentUIComponents();
 
 builder.Services.AddFastEndpoints();
 
@@ -32,8 +39,25 @@ builder.Services.AddToDoModule();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseWebAssemblyDebugging();
+}
+else
+{
+    app.UseExceptionHandler("/Error", createScopeForErrors: true);
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
+app.UseAntiforgery();
+
+app.MapRazorComponents<App>()
+    .AddInteractiveWebAssemblyRenderMode()
+    .AddAdditionalAssemblies(typeof(Counter).Assembly);
 
 app.UseAuthentication()
    .UseAuthorization();
@@ -70,7 +94,7 @@ app.MapGet("/featureAuth", (IFeatureAuthRepository endpointRepository) =>
     return endpointRepository.GetDetails();
 });
 
-app.MapGet("/", (ClaimsPrincipal claimsPrincipal) =>
+app.MapGet("/user", (ClaimsPrincipal claimsPrincipal) =>
 {
     return new
     {
